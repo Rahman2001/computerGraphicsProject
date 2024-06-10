@@ -1,2 +1,2 @@
 # computerGraphicsProject
-This is Computer Graphics group project for the final exam.
+This is Computer Graphics course (CENG492) group project for the final exam.
