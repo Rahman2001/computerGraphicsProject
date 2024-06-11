@@ -21,5 +21,7 @@
     "webpack-dev-server": "^5.0.4",
     "webpack-merge": "^5.10.0"
   },
-  "type": "module"
+  "dependencies": {
+    "three": "^0.165.0"
+  }
 }
