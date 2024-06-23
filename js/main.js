@@ -9,6 +9,7 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(0x000000);
 renderer.setPixelRatio(window.devicePixelRatio);
+renderer.shadowMap.enabled = true;
 
 document.body.appendChild(renderer.domElement);
 
@@ -29,19 +30,21 @@ control.update()
 
 
 camera.position.set(5,4,5);
-camera.lookAt(0,0,0);
+camera.lookAt(5,6,5);
 
-const groundGeometry = new THREE.PlaneGeometry(20, 20, 32, 32);
-groundGeometry.rotateX(-Math.PI/2);
+const groundGeometry = new THREE.PlaneGeometry(400, 400);
 const groundMaterial = new THREE.MeshBasicMaterial({
   color: 0x555555,
   side: THREE.DoubleSide
 });
-const groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
-scene.add( groundMesh );
+const mesh = new THREE.Mesh( groundGeometry,
+  groundMaterial );
+mesh.rotation.x = - Math.PI / 2;
+mesh.receiveShadow = true;
+scene.add( mesh );
 
-const spotLight = new THREE.SpotLight(0xffffff, 90, 20, 0.63, 0.5);
-spotLight.position.set(2.5, 5, 2.5);
+const spotLight = new THREE.SpotLight(0xffffff, 150, 70, 0.64, 1);
+spotLight.position.set(3, 12, 3);
 spotLight.castShadow = true;
 spotLight.shadow.mapSize.width = 1024;
 spotLight.shadow.mapSize.height = 1024;
@@ -52,9 +55,15 @@ scene.add(spotLight);
 
 const loader = new GLTFLoader().setPath('/godzilla/');
 loader.load('scene.gltf', (gltf) => {
-  const mesh = gltf.scene;
-  mesh.position.set(1, 1, 1.9);
-  scene.add(mesh);
+  const godzilla = gltf.scene;
+  godzilla.position.set( 0, 0, 0 );
+  godzilla.scale.set(4, 4, 4)
+  scene.add(godzilla);
+  godzilla.traverse( function ( object ) {
+
+    if ( object.isMesh ) object.castShadow = true;
+
+  } );
 });
 
 function animate() {
