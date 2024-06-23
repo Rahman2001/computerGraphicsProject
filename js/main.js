@@ -25,26 +25,26 @@ control.minDistance = 5
 control.maxDistance = 30
 control.minPolarAngle = 0.5
 control.maxPolarAngle = 1.5
-control.target = new Vector3(0, 1, 0)
+control.target = new Vector3(0, 5, 0)
 control.update()
 
 
-camera.position.set(5,4,5);
+camera.position.set(13,4,13);
 camera.lookAt(5,6,5);
 
 const groundGeometry = new THREE.PlaneGeometry(400, 400);
-const groundMaterial = new THREE.MeshBasicMaterial({
-  color: 0x555555,
+const groundMaterial = new THREE.MeshPhongMaterial( {
+  color: 0xcbcbcb,
+  depthWrite: false,
   side: THREE.DoubleSide
-});
-const mesh = new THREE.Mesh( groundGeometry,
-  groundMaterial );
+} )
+const mesh = new THREE.Mesh( groundGeometry, groundMaterial);
 mesh.rotation.x = - Math.PI / 2;
 mesh.receiveShadow = true;
 scene.add( mesh );
 
 const spotLight = new THREE.SpotLight(0xffffff, 150, 70, 0.64, 1);
-spotLight.position.set(3, 12, 3);
+spotLight.position.set(3, 12, 7);
 spotLight.castShadow = true;
 spotLight.shadow.mapSize.width = 1024;
 spotLight.shadow.mapSize.height = 1024;
