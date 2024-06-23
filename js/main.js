@@ -66,6 +66,8 @@ loader.load('scene.gltf', (gltf) => {
   } );
 });
 
+
+
 function animate() {
     requestAnimationFrame( animate );
     control.update()
