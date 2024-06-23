@@ -15,8 +15,37 @@
       }
     }
   </script>
+  <style>
+    body {
+        display: flex;
+        flex-direction: row;
+    }
+    #scene {
+            width: 1024px;  /* Set the desired width */
+            height: 768px; /* Set the desired height */
+            position: relative;
+    }
+    #controls { 
+        display: flex;
+        flex-direction: column;
+        transform: scale(0.9);
+    }
+  </style>
 </head>
 <body>
-<script type="module" src="./js/main.js"></script>
+  <div id="controls">
+    <p>Enable Godzilla movement:</p>
+    <button id="godzilla-move-button">Go</button>
+    <p>Enable Gobject 2 movement</p>
+    <button id="obj2-move-button">Go</button>
+    <p>Enable object 3 movement:</p>
+    <button id="obj3-move-button">Go</button>
+    <p>Enable light source movement:</p>
+    <button id="light-move-button">Go</button>
+    <p>Light brightness:</p>
+    <input type="range" id="light-brightness-range" min="0" max="20000" value="20000" />
+  </div>
+  <div id="scene"></div>
+  <script type="module" src="./js/main.js"></script>
 </body>
 </html>
