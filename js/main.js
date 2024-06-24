@@ -79,7 +79,7 @@ const planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
 
 // Load texture
 const textureLoader = new THREE.TextureLoader();
-textureLoader.load('../textures/ground.png', function(texture) {
+textureLoader.load('asset/textures/ground.png', function(texture) {
   // Set texture wrapping to repeat
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
@@ -98,37 +98,59 @@ textureLoader.load('../textures/ground.png', function(texture) {
 });
 
 const loader = new GLTFLoader();
-let model_godzilla, model_building_small, model_building_big, model_heli, model_obj2, model_obj3;
+let model_godzilla, model_building_small, model_building_big, model_heli, model_obj2, model_obj3, model_night_city,
+model_bridge, model_la_city;
 
-loader.load('models/godzilla/scene.gltf', (gltf) => {
+loader.load('asset/models/godzilla/scene.gltf', (gltf) => {
   model_godzilla = gltf.scene;
-  model_godzilla.scale.set(1.5, 1.5, 1.5)
-  model_godzilla.rotation.y = Math.PI
+  model_godzilla.scale.set(1.6, 1.6, 1.6)
+  model_godzilla.position.set(-5, 0, 0)
+  model_godzilla.rotation.y = Math.PI / 2
 
   // Add LOD object to the scene
   scene.add(model_godzilla);
 });
+loader.load("asset/models/nightCity/scene.gltf", (gltf) => {
+  model_night_city = gltf.scene;
+  model_night_city.scale.set(0.025, 0.025, 0.025)
+  model_night_city.position.set(3, 0, 0)
+  scene.add(model_night_city);
+})
 
-loader.load('models/heli/scene.gltf', gltf => {
-  model_heli = gltf.scene;
-  model_heli.position.set(0, 0, 50);
-  scene.add(model_heli);
-  
-});
+loader.load("asset/models/brooklynBridge/scene.gltf", gltf => {
+  model_bridge = gltf.scene;
+  model_bridge.scale.set(0.2, 0.2, 0.2);
+  model_bridge.rotation.y = Math.PI / 2;
+  model_bridge.position.set(3.3, 0, 3.2)
+  scene.add(model_bridge);
+})
 
-loader.load('models/buildbig/scene.gltf', gltf => {
-    model_building_big = gltf.scene;
-    checkAllModelsLoaded();
-    
-});
-
-loader.load('models/buildsmall/scene.gltf', gltf => {
-    model_building_small = gltf.scene;
-    checkAllModelsLoaded();
-});
+loader.load("asset/models/LANightCity/scene.gltf", gltf => {
+  model_la_city = gltf.scene;
+  model_la_city.scale.set(0.25, 0.25, 0.25);
+  model_la_city.position.set(3, 0, -4.3)
+  scene.add(model_la_city);
+})
+// loader.load('asset/models/heli/scene.gltf', gltf => {
+//   model_heli = gltf.scene;
+//   model_heli.position.set(0, 0, 50);
+//   scene.add(model_heli);
+//
+// });
+//
+// loader.load('asset/models/buildbig/scene.gltf', gltf => {
+//     model_building_big = gltf.scene;
+//     checkAllModelsLoaded();
+//
+// });
+//
+// loader.load('asset/models/buildsmall/scene.gltf', gltf => {
+//     model_building_small = gltf.scene;
+//     checkAllModelsLoaded();
+// });
 
 loader.load(
-  '../models/skybox/scene.gltf',
+  'asset/models/skybox/scene.gltf',
   function (gltf) {
       const skybox = gltf.scene;
 
@@ -147,7 +169,7 @@ loader.load(
 
       scene.add(skybox);
   },
-  undefined, 
+  undefined,
   function (error) {
       console.error('An error occurred while loading the skybox:', error);
   }
