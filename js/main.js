@@ -62,7 +62,13 @@ scene.add( groundMesh );
 const ambientLight = new THREE.AmbientLight(0x404040, 6); // Soft white light
 scene.add(ambientLight);
 
-const spotlight = new THREE.SpotLight(0xeeeeee, 20000, 0, 0.2, 0.2);
+const directionalLight = new THREE.DirectionalLight( 0xffffff, 2 );
+directionalLight.position.set(12, 9, 0)
+directionalLight.castShadow = true;
+// directionalLight.target.position.set(12, 9, 0)
+scene.add( directionalLight );
+
+const spotlight = new THREE.SpotLight(0xeeeeee, 2000, 0, 0.2, 0.2);
 spotlight.position.set(2.5, 5, 100);
 spotlight.castShadow = true;
 spotlight.shadow.mapSize.width = 1024;
@@ -99,7 +105,7 @@ const planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
 
 const loader = new GLTFLoader();
 let model_godzilla, model_building_small, model_building_big, model_heli, model_obj2, model_obj3, model_night_city,
-model_bridge, model_ocean;
+model_bridge, model_ocean, model_moon;
 
 
 loader.load("asset/models/seaWave/scene.gltf", gltf => {
@@ -133,6 +139,13 @@ loader.load("asset/models/brooklynBridge/scene.gltf", gltf => {
   model_bridge.rotation.y = Math.PI / 2 + Math.PI / 15;
   model_bridge.position.set(4, 0.56, 5.3)
   scene.add(model_bridge);
+})
+
+loader.load("asset/models/moon/scene.gltf", gltf => {
+  model_moon = gltf.scene;
+  model_moon.scale.set(0.0005, 0.0005, 0.0005);
+  model_moon.position.set(12, 9, 0)
+  scene.add(model_moon);
 })
 
 // loader.load("asset/models/LANightCity/scene.gltf", gltf => {
