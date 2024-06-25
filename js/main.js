@@ -2,6 +2,16 @@ import * as THREE from 'three'
 import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
 import {OrbitControls} from "three/addons/controls/OrbitControls.js"
 import {Vector3} from "three"
+import {GUI} from 'https://cdn.skypack.dev/dat.gui'
+
+let gui = new GUI();
+let folder1 = gui.addFolder('Godzilla');
+let folder2 = gui.addFolder('Moon Light')
+let folder3 = gui.addFolder('Scene Light')
+
+folder1.open();
+folder2.open();
+folder3.open();
 
 const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -104,8 +114,7 @@ const planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
 // });
 
 const loader = new GLTFLoader();
-let model_godzilla, model_building_small, model_building_big, model_heli, model_obj2, model_obj3, model_night_city,
-model_bridge, model_ocean, model_moon;
+let model_godzilla, model_night_city, model_bridge, model_ocean, model_moon;
 
 
 loader.load("asset/models/seaWave/scene.gltf", gltf => {
@@ -289,49 +298,49 @@ function populateGround() {
       }
   }
 }
-
-// controls
-const godzilla_move_button = document.getElementById('godzilla-move-button');
-const obj2_move_button = document.getElementById('obj2-move-button');
-const obj3_move_button = document.getElementById('obj3-move-button');
-const light_move_button = document.getElementById('light-move-button');
-const light_brightness_range = document.getElementById('light-brightness-range');
-
-// add event listeners
-godzilla_move_button.addEventListener('click', () => {
-  isMoving_godzilla = true;
-  isMoving_obj2 = false;
-  isMoving_obj3 = false;;
-  isMoving_light = false;
-});
+//
+// // controls
+// const godzilla_move_button = document.getElementById('godzilla-move-button');
+// const obj2_move_button = document.getElementById('obj2-move-button');
+// const obj3_move_button = document.getElementById('obj3-move-button');
+// const light_move_button = document.getElementById('light-move-button');
+// const light_brightness_range = document.getElementById('light-brightness-range');
 
 // add event listeners
-obj2_move_button.addEventListener('click', () => {
-  isMoving_godzilla = false;
-  isMoving_obj2 = true;
-  isMoving_obj3 = false;;
-  isMoving_light = false;
-});
-
-// add event listeners
-obj3_move_button.addEventListener('click', () => {
-  isMoving_godzilla = false;
-  isMoving_obj2 = false;
-  isMoving_obj3 = true;;
-  isMoving_light = false;
-});
-
-// add event listeners
-light_move_button.addEventListener('click', () => {
-  isMoving_godzilla = false;
-  isMoving_obj2 = false;
-  isMoving_obj3 = false;
-  isMoving_light = true;
-});
-
-light_brightness_range.addEventListener('input', () => {
-  spotlight.intensity = parseFloat(light_brightness_range.value);
-});
+// godzilla_move_button.addEventListener('click', () => {
+//   isMoving_godzilla = true;
+//   isMoving_obj2 = false;
+//   isMoving_obj3 = false;;
+//   isMoving_light = false;
+// });
+//
+// // add event listeners
+// obj2_move_button.addEventListener('click', () => {
+//   isMoving_godzilla = false;
+//   isMoving_obj2 = true;
+//   isMoving_obj3 = false;;
+//   isMoving_light = false;
+// });
+//
+// // add event listeners
+// obj3_move_button.addEventListener('click', () => {
+//   isMoving_godzilla = false;
+//   isMoving_obj2 = false;
+//   isMoving_obj3 = true;;
+//   isMoving_light = false;
+// });
+//
+// // add event listeners
+// light_move_button.addEventListener('click', () => {
+//   isMoving_godzilla = false;
+//   isMoving_obj2 = false;
+//   isMoving_obj3 = false;
+//   isMoving_light = true;
+// });
+//
+// light_brightness_range.addEventListener('input', () => {
+//   spotlight.intensity = parseFloat(light_brightness_range.value);
+// });
 
 // Add event listener for keyboard input
 // document.addEventListener('keydown', onDocumentKeyDown, false);
