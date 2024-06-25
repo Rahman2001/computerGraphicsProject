@@ -4,14 +4,17 @@ import {OrbitControls} from "three/addons/controls/OrbitControls.js"
 import {Vector3} from "three"
 import {GUI} from 'https://cdn.skypack.dev/dat.gui'
 
-let gui = new GUI();
-let folder1 = gui.addFolder('Godzilla');
-let folder2 = gui.addFolder('Moon Light')
-let folder3 = gui.addFolder('Scene Light')
+let gui_container = document.getElementById("gui_container")
+let gui = new GUI({ autoPlace: false });
+gui.domElement.id = 'gui';
+gui_container.appendChild(gui.domElement);
 
-folder1.open();
-folder2.open();
-folder3.open();
+let folder1 = gui.addFolder('Godzilla Rotate');
+let folder11 = gui.addFolder("Godzilla Direction");
+let folder2 = gui.addFolder('Moon Rotate')
+let folder21 = gui.addFolder("Moon Direction");
+let folder3 = gui.addFolder('SpotLight')
+
 
 const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -46,18 +49,9 @@ camera.aspect = width / height;
 camera.updateProjectionMatrix();
 renderer.setSize(width, height);
 
-
-
-
-
-var isMoving_godzilla = true;
-var isMoving_obj2 = false;
-var isMoving_obj3 = false;;
-var isMoving_light = false;
-var light_brightness;
-
 camera.position.set(5,4,5);
 camera.lookAt(0,0,0);
+
 
 const groundGeometry = new THREE.PlaneGeometry(20, 20, 32, 32);
 groundGeometry.rotateX(-Math.PI/2);
@@ -75,7 +69,6 @@ scene.add(ambientLight);
 const directionalLight = new THREE.DirectionalLight( 0xffffff, 2 );
 directionalLight.position.set(12, 9, 0)
 directionalLight.castShadow = true;
-// directionalLight.target.position.set(12, 9, 0)
 scene.add( directionalLight );
 
 const spotlight = new THREE.SpotLight(0xeeeeee, 2000, 0, 0.2, 0.2);
@@ -93,26 +86,6 @@ scene.add(spotlight);
 const planeSize = 40;
 const planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
 
-// Load texture
-// const textureLoader = new THREE.TextureLoader();
-// textureLoader.load('asset/textures/ground.png', function(texture) {
-//   // Set texture wrapping to repeat
-//   texture.wrapS = THREE.RepeatWrapping;
-//   texture.wrapT = THREE.RepeatWrapping;
-//
-//   // Set the number of times the texture should repeat
-//   texture.repeat.set(20, 20); // Adjust these values as needed
-//
-//   const planeMaterial = new THREE.MeshLambertMaterial({ map: texture, side: THREE.DoubleSide });
-//   const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-//   plane.rotation.x = Math.PI / 2;
-//   // Adjust the Z position of the plane to avoid Z-fighting
-//   plane.position.y = 0.02;
-//
-//   // Add plane to the scene
-//   scene.add(plane);
-// });
-
 const loader = new GLTFLoader();
 let model_godzilla, model_night_city, model_bridge, model_ocean, model_moon;
 
@@ -129,6 +102,13 @@ loader.load('asset/models/godzilla/scene.gltf', (gltf) => {
   model_godzilla = gltf.scene;
   model_godzilla.scale.set(3, 3, 3)
   model_godzilla.position.set(-5, 0.023, 0)
+  folder1.add(model_godzilla.rotation, 'x', 0, Math.PI);
+  folder1.add(model_godzilla.rotation, 'y', 0, Math.PI);
+  folder1.add(model_godzilla.rotation, 'z', 0, Math.PI);
+
+  folder11.add(model_godzilla.position, 'x', 0, 10);
+  folder11.add(model_godzilla.position, 'y', 0, 10);
+  folder11.add(model_godzilla.position, 'z', 0, 10);
   model_godzilla.rotation.y = Math.PI / 2
 
   // Add LOD object to the scene
@@ -154,32 +134,30 @@ loader.load("asset/models/moon/scene.gltf", gltf => {
   model_moon = gltf.scene;
   model_moon.scale.set(0.0005, 0.0005, 0.0005);
   model_moon.position.set(12, 9, 0)
+
+  folder2.add(model_moon.rotation, 'x', 0, Math.PI / 2);
+  folder2.add(model_moon.rotation, 'y', 0, Math.PI / 2);
+  folder2.add(model_moon.rotation, 'z', 0, Math.PI / 2);
+
+  folder21.add(model_moon.position, 'x', 0, 10);
+  folder21.add(model_moon.position, 'y', 0, 10);
+  folder21.add(model_moon.position, 'z', 0, 10);
+
   scene.add(model_moon);
 })
 
-// loader.load("asset/models/LANightCity/scene.gltf", gltf => {
-//   model_la_city = gltf.scene;
-//   model_la_city.scale.set(0.25, 0.25, 0.25);
-//   model_la_city.position.set(3, 0, -4.3)
-//   scene.add(model_la_city);
-// })
-// loader.load('asset/models/heli/scene.gltf', gltf => {
-//   model_heli = gltf.scene;
-//   model_heli.position.set(0, 0, 50);
-//   scene.add(model_heli);
-//
-// });
-//
-// loader.load('asset/models/buildbig/scene.gltf', gltf => {
-//     model_building_big = gltf.scene;
-//     checkAllModelsLoaded();
-//
-// });
-//
-// loader.load('asset/models/buildsmall/scene.gltf', gltf => {
-//     model_building_small = gltf.scene;
-//     checkAllModelsLoaded();
-// });
+// folder3.add(spotlight.intensity, 'intensity', 0, 20000);
+
+let folder31 = gui.addFolder("SpotLight Direction");
+folder31.add(spotlight.position, 'x', 0, 100);
+folder31.add(spotlight.position, 'y', 0, 100);
+folder31.add(spotlight.position, 'z', 0, 100);
+
+folder1.open();
+folder11.open();
+folder2.open();
+folder21.open();
+folder3.open();
 
 loader.load(
   'asset/models/skybox/scene.gltf',
@@ -206,65 +184,6 @@ loader.load(
       console.error('An error occurred while loading the skybox:', error);
   }
 );
-
-const clock = new THREE.Clock();
-//
-// let particleSystem;
-// const particleSystems = [];
-
-// Function to create explosion particles
-// function createExplosion(location, particleCount = 40, ttl = 5) {
-//   const particleGeometry = new THREE.BufferGeometry();
-//   const particles = new Float32Array(particleCount * 3); // Position data
-//
-//   for (let i = 0; i < particleCount; i++) {
-//       const i3 = i * 3;
-//       particles[i3] = location.x;
-//       particles[i3 + 1] = location.y;
-//       particles[i3 + 2] = location.z;
-//   }
-//
-//   particleGeometry.setAttribute('position', new THREE.BufferAttribute(particles, 3));
-//
-//   const particleMaterial = new THREE.PointsMaterial({
-//       color: 0xff0000, // Red color
-//       size: 0.1,
-//       transparent: true,
-//   });
-//
-//   const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
-//   particleSystem.ttl = ttl; // Set time-to-live property
-//   particleSystems.push(particleSystem);
-//   scene.add(particleSystem);
-// }
-
-// Animate explosion particles
-// function animateParticles() {
-//   const delta = clock.getDelta();
-//
-//   for (let i = particleSystems.length - 1; i >= 0; i--) {
-//       const particleSystem = particleSystems[i];
-//       const particles = particleSystem.geometry.attributes.position.array;
-//
-//       // Update each particle's position
-//       for (let j = 0; j < particles.length; j += 3) {
-//           particles[j] += (Math.random() - 0.5) * delta * 10;
-//           particles[j + 1] += (Math.random() - 0.5) * delta * 10;
-//           particles[j + 2] += (Math.random() - 0.5) * delta * 10;
-//       }
-//
-//       particleSystem.geometry.attributes.position.needsUpdate = true;
-//
-//       // Decrease TTL and remove if expired
-//       particleSystem.ttl -= delta;
-//       if (particleSystem.ttl <= 0) {
-//           scene.remove(particleSystem);
-//           particleSystems.splice(i, 1);
-//       }
-//   }
-// }
-
-
 
 
 // Ensure both models are loaded
@@ -298,127 +217,6 @@ function populateGround() {
       }
   }
 }
-//
-// // controls
-// const godzilla_move_button = document.getElementById('godzilla-move-button');
-// const obj2_move_button = document.getElementById('obj2-move-button');
-// const obj3_move_button = document.getElementById('obj3-move-button');
-// const light_move_button = document.getElementById('light-move-button');
-// const light_brightness_range = document.getElementById('light-brightness-range');
-
-// add event listeners
-// godzilla_move_button.addEventListener('click', () => {
-//   isMoving_godzilla = true;
-//   isMoving_obj2 = false;
-//   isMoving_obj3 = false;;
-//   isMoving_light = false;
-// });
-//
-// // add event listeners
-// obj2_move_button.addEventListener('click', () => {
-//   isMoving_godzilla = false;
-//   isMoving_obj2 = true;
-//   isMoving_obj3 = false;;
-//   isMoving_light = false;
-// });
-//
-// // add event listeners
-// obj3_move_button.addEventListener('click', () => {
-//   isMoving_godzilla = false;
-//   isMoving_obj2 = false;
-//   isMoving_obj3 = true;;
-//   isMoving_light = false;
-// });
-//
-// // add event listeners
-// light_move_button.addEventListener('click', () => {
-//   isMoving_godzilla = false;
-//   isMoving_obj2 = false;
-//   isMoving_obj3 = false;
-//   isMoving_light = true;
-// });
-//
-// light_brightness_range.addEventListener('input', () => {
-//   spotlight.intensity = parseFloat(light_brightness_range.value);
-// });
-
-// Add event listener for keyboard input
-// document.addEventListener('keydown', onDocumentKeyDown, false);
-//
-// // Handle window resize
-// window.addEventListener('resize', () => {
-//   const width = sceneDiv.clientWidth;
-//   const height = sceneDiv.clientHeight;
-//   camera.aspect = width / height;
-//   camera.updateProjectionMatrix();
-//   renderer.setSize(width, height);
-// });
-
-
-// const moveSpeed = 0.1;
-// const rotateSpeed = 0.02;
-
-// function onDocumentKeyDown(event) {
-//   let model;
-//   if (isMoving_godzilla){
-//     model = model_godzilla;
-//   }
-//   else if (isMoving_obj2){
-//     model = model_obj2;
-//   }
-//   else if (isMoving_obj3){
-//     model = model_obj3;
-//   }
-//   else if (isMoving_light){
-//     model = spotlight;
-//     moveSpeed = 1
-//   }
-//   switch (event.key) {
-//       case 'w':
-//           model.position.z -= moveSpeed;
-//           if (isMoving_godzilla && (Math.random() < 0.2)){
-//             createExplosion(model.position)
-//           }
-//           break;
-//       case 's':
-//           model.position.z += moveSpeed;
-//           if (isMoving_godzilla && (Math.random() < 0.2)){
-//             createExplosion(model.position)
-//           }
-//           break;
-//       case 'a':
-//           model.position.x -= moveSpeed;
-//           if (isMoving_godzilla && (Math.random() < 0.2)){
-//             createExplosion(model.position)
-//           }
-//           break;
-//       case 'd':
-//           model.position.x += moveSpeed;
-//           if (isMoving_godzilla && (Math.random() < 0.2)){
-//             createExplosion(model.position)
-//           }
-//           break;
-//       case '1':
-//           model.rotation.x -= rotateSpeed;
-//           break;
-//       case '2':
-//           model.rotation.x += rotateSpeed;
-//           break;
-//       case '3':
-//           model.rotation.y -= rotateSpeed;
-//           break;
-//       case '4':
-//           model.rotation.y += rotateSpeed;
-//           break;
-//       case '5':
-//           model.rotation.z -= rotateSpeed;
-//           break;
-//       case '6':
-//           model.rotation.z += rotateSpeed;
-//           break;
-//   }
-// }
-
 
 
 function animate() {
