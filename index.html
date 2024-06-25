@@ -1,3 +1,59 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="utf-8">-->
+<!--  <title>Millennium Falcon</title>-->
+
+<!--  <link rel="stylesheet" href="./css/style.css">-->
+<!--&lt;!&ndash;  <script src="https://cdn.observableusercontent.com/npm/dat.gui@0.7.9/build/dat.gui.js"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;  <script type="text/javascript" src="dat.gui.min.js"></script>&ndash;&gt;&ndash;&gt;-->
+<!--  <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>-->
+<!--  <script type="importmap">-->
+<!--    {-->
+<!--      "imports": {-->
+<!--        "three": "https://unpkg.com/three@v0.163.0/build/three.module.js",-->
+<!--        "three/addons/": "https://unpkg.com/three@v0.163.0/examples/jsm/"-->
+<!--      }-->
+<!--    }-->
+<!--  </script>-->
+<!--  <style>-->
+<!--    body {-->
+<!--        display: flex;-->
+<!--        flex-direction: row;-->
+<!--    }-->
+<!--    #scene {-->
+<!--            width: 1024px;  /* Set the desired width */-->
+<!--            height: 768px; /* Set the desired height */-->
+<!--            position: relative;-->
+<!--    }-->
+
+<!--    #controls {-->
+<!--        display: flex;-->
+<!--        flex-direction: column;-->
+<!--        transform: scale(0.9);-->
+<!--    }-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash;  <div id="controls">&ndash;&gt;-->
+<!--&lt;!&ndash;    <p>Enable Godzilla movement:</p>&ndash;&gt;-->
+<!--&lt;!&ndash;    <button id="godzilla-move-button">Go</button>&ndash;&gt;-->
+<!--&lt;!&ndash;    <p>Enable Gobject 2 movement</p>&ndash;&gt;-->
+<!--&lt;!&ndash;    <button id="obj2-move-button">Go</button>&ndash;&gt;-->
+<!--&lt;!&ndash;    <p>Enable object 3 movement:</p>&ndash;&gt;-->
+<!--&lt;!&ndash;    <button id="obj3-move-button">Go</button>&ndash;&gt;-->
+<!--&lt;!&ndash;    <p>Enable light source movement:</p>&ndash;&gt;-->
+<!--&lt;!&ndash;    <button id="light-move-button">Go</button>&ndash;&gt;-->
+<!--&lt;!&ndash;    <p>Light brightness:</p>&ndash;&gt;-->
+<!--&lt;!&ndash;    <input type="range" id="light-brightness-range" min="0" max="20000" value="20000" />&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+
+<!--  <div id="scene"></div>-->
+<!--  <script type="module" src="./js/main.js"></script>-->
+<!--<div id="gui_container"></div>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +61,7 @@
   <title>Millennium Falcon</title>
 
   <link rel="stylesheet" href="./css/style.css">
-<!--  <script src="https://cdn.observableusercontent.com/npm/dat.gui@0.7.9/build/dat.gui.js"></script>-->
-<!--&lt;!&ndash;  <script type="text/javascript" src="dat.gui.min.js"></script>&ndash;&gt;-->
+
   <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
   <script type="importmap">
     {
@@ -18,38 +73,35 @@
   </script>
   <style>
     body {
-        display: flex;
-        flex-direction: row;
+      display: flex;
+      flex-direction: row;
     }
     #scene {
-            width: 1024px;  /* Set the desired width */
-            height: 768px; /* Set the desired height */
-            position: relative;
+      width: 1024px;  /* Set the desired width */
+      height: 768px; /* Set the desired height */
+      position: relative;
     }
-
     #controls {
-        display: flex;
-        flex-direction: column;
-        transform: scale(0.9);
+      display: flex;
+      flex-direction: column;
+      transform: scale(0.9);
     }
   </style>
 </head>
 <body>
-<!--  <div id="controls">-->
-<!--    <p>Enable Godzilla movement:</p>-->
-<!--    <button id="godzilla-move-button">Go</button>-->
-<!--    <p>Enable Gobject 2 movement</p>-->
-<!--    <button id="obj2-move-button">Go</button>-->
-<!--    <p>Enable object 3 movement:</p>-->
-<!--    <button id="obj3-move-button">Go</button>-->
-<!--    <p>Enable light source movement:</p>-->
-<!--    <button id="light-move-button">Go</button>-->
-<!--    <p>Light brightness:</p>-->
-<!--    <input type="range" id="light-brightness-range" min="0" max="20000" value="20000" />-->
-<!--  </div>-->
-
-  <div id="scene"></div>
-  <script type="module" src="./js/main.js"></script>
-<div id="gui_container"></div>
+<div id="controls">
+  <p>Enable Godzilla movement:</p>
+  <button id="godzilla-move-button">Go</button>
+  <p>Enable Gobject 2 movement</p>
+  <button id="obj2-move-button">Go</button>
+  <p>Enable object 3 movement:</p>
+  <button id="obj3-move-button">Go</button>
+  <p>Enable light source movement:</p>
+  <button id="light-move-button">Go</button>
+  <p>Light brightness:</p>
+  <input type="range" id="light-brightness-range" min="0" max="20000" value="20000" />
+</div>
+<div id="scene"></div>
+<script type="module" src="./js/main.js"></script>
 </body>
 </html>
